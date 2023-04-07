@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/test")
 public class testController {
 	@GetMapping
-//	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> sayHello(Principal principal) {
         return new ResponseEntity<>(String.format("Hello test"), HttpStatus.OK);
     }

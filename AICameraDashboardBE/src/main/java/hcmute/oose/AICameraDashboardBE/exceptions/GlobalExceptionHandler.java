@@ -10,7 +10,7 @@ import hcmute.oose.AICameraDashboardBE.dtos.ResponseDto;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	@ExceptionHandler(Exception.class)
+	@ExceptionHandler(ExceptionCustom.class)
 	public ResponseEntity<?> exceptionCustom(ExceptionCustom e) {
 		return ResponseEntity.status(e.getStatus().value()).body(
 				new ResponseDto(e.getStatus().toString(), e.getMessage(), ""));
