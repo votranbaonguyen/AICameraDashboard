@@ -32,25 +32,26 @@ public class AuthenticateController {
 
     @PostMapping("/login")
 	public ResponseEntity<?> login(@Valid @RequestBody AccountRequest accountRequest) throws ExceptionCustom{
-		Authentication authentication = null; 
+		Authentication authentication = null;
 		try {
 			authentication = authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(accountRequest.getEmail(), accountRequest.getPassword()));
 		} catch (Exception e) {
-			throw new ExceptionCustom(HttpStatus.UNAUTHORIZED, "Can not authenticate this account" + accountRequest.getEmail());
+			System.out.println(e.getMessage());
+			throw new ExceptionCustom(HttpStatus.UNAUTHORIZED, "Can not authenticate this account: " + accountRequest.getEmail() +": ps: "+accountRequest.getPassword() );
 		}
-		
+
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtTokenUtils.generateToken(authentication);
-		
-		JwtAccountDetails accountDetails = (JwtAccountDetails) authentication.getPrincipal();		
+
+		JwtAccountDetails accountDetails = (JwtAccountDetails) authentication.getPrincipal();
 		List<String> roles = accountDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 
 		return new ResponseEntity<>(new AccountResponse(jwt,
 				accountDetails.getUsername(),
-				 roles), HttpStatus.OK);
+				roles), HttpStatus.OK);
 	}
 }
