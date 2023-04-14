@@ -2,6 +2,7 @@ package hcmute.oose.AICameraDashboardBE.services;
 
 import hcmute.oose.AICameraDashboardBE.dtos.camera.cameraDto;
 import hcmute.oose.AICameraDashboardBE.entities.cameraEntity;
+import hcmute.oose.AICameraDashboardBE.exceptions.ExceptionCustom;
 import hcmute.oose.AICameraDashboardBE.repositories.cameraRepository;
 import org.springframework.stereotype.Service;
 
@@ -34,19 +35,19 @@ public class cameraServiceImpl implements cameraService {
         Optional<cameraEntity> camera = cameraRepository.findById(Id);
         if (camera.isPresent()) {
             cameraEntity cameraEntity = camera.get();
-
+            myDto.setCamId(cameraEntity.getCamId());
             myDto.setCamName(cameraEntity.getCamName());
             myDto.setAreaId(cameraEntity.getAreaId());
             myDto.setResource(cameraEntity.getResource());
-        } else {
-
-        }
+        } else
+            return null;
         return myDto;
     }
 
-    public List<cameraEntity> getAllCamera(){
-        List<cameraEntity> myCam = new ArrayList<>();
+    public List<cameraDto> getAllCamera(){
         List<cameraEntity> cameras = cameraRepository.findAll();
-        return cameras;
+        List<cameraDto> cameraDtos = new ArrayList<cameraDto>();
+        cameras.forEach(entity -> cameraDtos.add(new cameraDto(entity.getCamId(), entity.getCamName(), entity.getAreaId(), entity.getResource())));
+        return cameraDtos;
     }
 }

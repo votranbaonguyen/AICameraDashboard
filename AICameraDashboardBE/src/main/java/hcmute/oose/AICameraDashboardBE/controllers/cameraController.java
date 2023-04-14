@@ -44,18 +44,19 @@ public class cameraController {
 //    }
 
     @GetMapping("/video")
-    public ResponseEntity<ResponseDto> getVideoData(@RequestParam("cameraId") String cameraId) {
+    public ResponseEntity<ResponseDto> getVideoData(@RequestParam String cameraId) throws ExceptionCustom{
         cameraDto myDto = new cameraDto();
         myDto = cameraService.getInfoCamera(cameraId);
+        if(myDto == null) throw new ExceptionCustom(HttpStatus.BAD_REQUEST, "Id is not exist!");
 
         return new ResponseEntity<>(new ResponseDto("Infomation", "CameraIn4", myDto), HttpStatus.OK);
     }
 
     @GetMapping("/videos")
-    public List<cameraEntity> getAllVideoData() {
-        List<cameraEntity> myCam = new ArrayList<>();
+    public ResponseEntity<ResponseDto> getAllVideoData() {
+        List<cameraDto> myCam = new ArrayList<>();
         myCam = cameraService.getAllCamera();
-        return myCam;
+        return new ResponseEntity<>(new ResponseDto("Infomation", "CameraIn4", myCam), HttpStatus.OK);
     }
 
 }
