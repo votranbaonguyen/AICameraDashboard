@@ -1,12 +1,22 @@
 import React from 'react'
 import { Button, Checkbox, Form, Input } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { userLogin } from '../../redux/authentication/authenticationSlice';
+
 
 export const Login = () => {
     const navigate = useNavigate();
-    const onFinish = (values) => {
-        //API call
-        navigate("/")
+    const dispatch = useDispatch()
+
+    const {loading} = useSelector(store => store.authentication)
+
+    const onFinish = async (values) => {
+        const res = await dispatch(userLogin(values))
+        if(res.payload){
+            navigate("/")
+        }
+        
     };
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
@@ -71,7 +81,7 @@ export const Login = () => {
                         wrapperCol={{
                           
                           }}>
-                            <Button type="primary" htmlType="submit" style={{width:"100%",paddingBlock:"22px",display:'flex',alignItems:'center',justifyContent:'center',marginTop:'20px'}}>
+                            <Button loading={loading} type="primary" htmlType="submit" style={{width:"100%",paddingBlock:"22px",display:'flex',alignItems:'center',justifyContent:'center',marginTop:'20px'}}>
                                 Log In
                             </Button>
                         </Form.Item>
