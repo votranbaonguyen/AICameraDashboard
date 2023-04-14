@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
-import counterSlice from './counter/counterSlice'
+import authenticationSlice from './authentication/authenticationSlice'
+import cameraSlice from './camera/cameraSlice'
+
 
 
 export const store = configureStore({
   reducer: {
-    couter: 
-    
-    counterSlice
+    authentication: authenticationSlice,
+    camera: cameraSlice
   },
 })
