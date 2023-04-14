@@ -2,16 +2,13 @@ package hcmute.oose.AICameraDashboardBE.controllers;
 
 import hcmute.oose.AICameraDashboardBE.dtos.ResponseDto;
 import hcmute.oose.AICameraDashboardBE.dtos.camera.cameraDto;
-import hcmute.oose.AICameraDashboardBE.entities.cameraEntity;
 import hcmute.oose.AICameraDashboardBE.exceptions.ExceptionCustom;
 import hcmute.oose.AICameraDashboardBE.services.cameraServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
