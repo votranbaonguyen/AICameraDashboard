@@ -5,6 +5,8 @@ import hcmute.oose.AICameraDashboardBE.entities.cameraEntity;
 import hcmute.oose.AICameraDashboardBE.repositories.cameraRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -40,5 +42,11 @@ public class cameraServiceImpl implements cameraService {
 
         }
         return myDto;
+    }
+
+    public List<cameraEntity> getAllCamera(){
+        List<cameraEntity> myCam = new ArrayList<>();
+        List<cameraEntity> cameras = cameraRepository.findAll();
+        return cameras;
     }
 }
