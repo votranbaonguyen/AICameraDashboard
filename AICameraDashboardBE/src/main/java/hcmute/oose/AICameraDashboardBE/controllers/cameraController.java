@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 
+@CrossOrigin("http://localhost:5173/")
 @RestController
 @RequestMapping("/api/camera")
 public class cameraController {
