@@ -13,6 +13,7 @@ export const Home = () => {
     dispatch(getAllCamera())
   },[])
 
+
   const renderCamera = () => {
     return listCamera?.map((camera) => {
       return <Col span={12}>
@@ -20,14 +21,14 @@ export const Home = () => {
       </Col>
     })
   }
-  
+
 
     return (
       <div className='home_container'>
         <div className='home_info'>
           <div className='info_card'>
             <h3>Tổng số Camera</h3>
-            <span>60</span>
+            <span>{listCamera.length}</span>
           </div>
           <div className='info_card'>
             <h3>Tổng số Profile</h3>

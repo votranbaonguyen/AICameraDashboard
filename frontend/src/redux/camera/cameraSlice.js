@@ -17,7 +17,8 @@ export const getAllCamera = createAsyncThunk(
     });
     res = JSON.stringify(res);
     res = JSON.parse(res);
-    return res.data;
+    console.log(res)
+    return res.data.data;
   }
 );
 
