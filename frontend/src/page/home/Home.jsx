@@ -22,7 +22,6 @@ export const Home = () => {
     })
   }
 
-
     return (
       <div className='home_container'>
         <div className='home_info'>
