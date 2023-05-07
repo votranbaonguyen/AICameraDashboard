@@ -11,17 +11,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "cameras")
-public class cameraEntity extends BaseEntity{
+@Document(collection = "areas")
+public class areaEntity {
 
     @Id
-    String camId;
-
-    String camName;
     String areaId;
 
-    String resource;
+    String camId;
 
-    Boolean connectionState = true;
-    String securityLevel;
+    String areaName;
 }

@@ -16,4 +16,6 @@ public class cameraDto {
     String camName;
     String areaId;
     String resource;
+    Boolean connectionState = true;
+    String securityLevel;
 }

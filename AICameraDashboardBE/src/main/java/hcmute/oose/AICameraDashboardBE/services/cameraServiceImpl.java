@@ -21,12 +21,20 @@ public class cameraServiceImpl implements cameraService {
 
     @Override
     public void addOrUpdateCamera(cameraDto dto) {
-        cameraRepository
-                .insert(new cameraEntity(dto.getCamId(), dto.getCamName(), dto.getAreaId(), dto.getResource()));
+        cameraEntity temp = new cameraEntity(null, dto.getCamName(), dto.getAreaId(), dto.getResource(),
+                dto.getConnectionState(), dto.getSecurityLevel());
+
+        cameraRepository.save(temp);
     }
 
     @Override
-    public void removeCamera(String Id) {
+    public boolean removeCamera(String Id) {
+        Optional<cameraEntity> temp = cameraRepository.findById(Id);
+        if(temp.isEmpty()){
+            return false;
+        }
+        cameraRepository.deleteById(Id);
+        return true;
     }
 
     @Override
@@ -47,7 +55,8 @@ public class cameraServiceImpl implements cameraService {
     public List<cameraDto> getAllCamera(){
         List<cameraEntity> cameras = cameraRepository.findAll();
         List<cameraDto> cameraDtos = new ArrayList<cameraDto>();
-        cameras.forEach(entity -> cameraDtos.add(new cameraDto(entity.getCamId(), entity.getCamName(), entity.getAreaId(), entity.getResource())));
+        cameras.forEach(entity -> cameraDtos.add(new cameraDto(entity.getCamId(), entity.getCamName(),
+                entity.getAreaId(), entity.getResource(), entity.getConnectionState(), entity.getSecurityLevel())));
         return cameraDtos;
     }
 }
