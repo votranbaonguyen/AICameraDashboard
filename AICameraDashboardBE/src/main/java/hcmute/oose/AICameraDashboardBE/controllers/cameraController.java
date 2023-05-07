@@ -1,6 +1,7 @@
 package hcmute.oose.AICameraDashboardBE.controllers;
 
 import hcmute.oose.AICameraDashboardBE.dtos.ResponseDto;
+import hcmute.oose.AICameraDashboardBE.dtos.areaDto;
 import hcmute.oose.AICameraDashboardBE.dtos.camera.cameraDto;
 import hcmute.oose.AICameraDashboardBE.exceptions.ExceptionCustom;
 import hcmute.oose.AICameraDashboardBE.services.cameraServiceImpl;
@@ -23,30 +24,25 @@ public class cameraController {
         this.cameraService = cameraService;
     }
 
-    @PostMapping("/add")
+    @PostMapping()
     public ResponseEntity<?> addData(@Valid @RequestBody cameraDto cameraDto) throws ExceptionCustom {
 
-        cameraService.addOrUpdateCamera(cameraDto);
+        cameraService.addCamera(cameraDto);
         return new ResponseEntity<>
                 (new ResponseDto("Add succeed", "Add camera name "+cameraDto.getCamName()+" success",
-                        null), HttpStatus.OK);
+                        cameraDto), HttpStatus.OK);
     }
 
-//    @PostMapping("/video")
-//    public ResponseEntity<ResponseDto> getVideoData(@Valid @RequestBody String cameraId) {
-//        cameraDto myDto = new cameraDto();
-//        myDto = cameraService.getInfoCamera(cameraId);
-//
-//        return new ResponseEntity<>(new ResponseDto("Infomation", "CameraIn4", myDto), HttpStatus.OK);
-//    }
 
     @GetMapping("/video")
-    public ResponseEntity<ResponseDto> getVideoData(@RequestParam String cameraId) throws ExceptionCustom{
-        cameraDto myDto = new cameraDto();
-        myDto = cameraService.getInfoCamera(cameraId);
-        if(myDto == null) throw new ExceptionCustom(HttpStatus.BAD_REQUEST, "Id is not exist!");
-
-        return new ResponseEntity<>(new ResponseDto("Infomation", "CameraIn4", myDto), HttpStatus.OK);
+    public ResponseEntity<ResponseDto> getVideoData(@RequestParam String id) {
+        cameraDto dto = cameraService.getInfoCamera(id);
+        if (dto == null){
+            return new ResponseEntity<>
+                    (new ResponseDto("Get data", "failed", null), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>
+                (new ResponseDto("Get data", "succeed", dto), HttpStatus.OK);
     }
 
     @GetMapping("/videos")
@@ -56,4 +52,27 @@ public class cameraController {
         return new ResponseEntity<>(new ResponseDto("Infomation", "CameraIn4", myCam), HttpStatus.OK);
     }
 
+    @PutMapping()
+    public ResponseEntity<?> updateData(@RequestBody cameraDto dto) {
+
+        boolean check = cameraService.updateCamera(dto);
+        if (check == false) {
+            return new ResponseEntity<>
+                    (new ResponseDto("Update data", "failed", null), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>
+                (new ResponseDto("Update data", "succeed", dto), HttpStatus.OK);
+    }
+
+    @DeleteMapping()
+    public ResponseEntity<?> deleteData(@RequestParam String id) {
+
+        boolean check = cameraService.removeCamera(id);
+        if (check == false) {
+            return new ResponseEntity<>
+                    (new ResponseDto("Delete data", "failed", null), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>
+                (new ResponseDto("Delete data", "succeed", null), HttpStatus.OK);
+    }
 }

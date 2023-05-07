@@ -20,11 +20,21 @@ public class cameraServiceImpl implements cameraService {
     }
 
     @Override
-    public void addOrUpdateCamera(cameraDto dto) {
+    public void addCamera(cameraDto dto) {
         cameraEntity temp = new cameraEntity(null, dto.getCamName(), dto.getAreaId(), dto.getResource(),
                 dto.getConnectionState(), dto.getSecurityLevel());
 
         cameraRepository.save(temp);
+    }
+
+    public boolean updateCamera(cameraDto dto){
+        if (!cameraRepository.existsByCamId(dto.getCamId())){
+            return false;
+        }
+        cameraEntity temp = new cameraEntity(dto.getCamId(), dto.getCamName(), dto.getAreaId(),
+                dto.getResource(), dto.getConnectionState(), dto.getSecurityLevel());
+        cameraRepository.save(temp);
+        return true;
     }
 
     @Override
@@ -39,22 +49,19 @@ public class cameraServiceImpl implements cameraService {
 
     @Override
     public cameraDto getInfoCamera(String Id) {
-        cameraDto myDto = new cameraDto();
-        Optional<cameraEntity> camera = cameraRepository.findById(Id);
-        if (camera.isPresent()) {
-            cameraEntity cameraEntity = camera.get();
-            myDto.setCamId(cameraEntity.getCamId());
-            myDto.setCamName(cameraEntity.getCamName());
-            myDto.setAreaId(cameraEntity.getAreaId());
-            myDto.setResource(cameraEntity.getResource());
-        } else
+        if (!cameraRepository.existsByCamId(Id)){
             return null;
-        return myDto;
+        }
+        Optional<cameraEntity> temp = cameraRepository.findById(Id);
+        cameraEntity x = temp.get();
+        cameraDto dto = new cameraDto(x.getCamId(), x.getCamName(), x.getAreaId(), x.getResource(),
+                x.getConnectionState(), x.getSecurityLevel());
+        return dto;
     }
 
     public List<cameraDto> getAllCamera(){
         List<cameraEntity> cameras = cameraRepository.findAll();
-        List<cameraDto> cameraDtos = new ArrayList<cameraDto>();
+        List<cameraDto> cameraDtos = new ArrayList<>();
         cameras.forEach(entity -> cameraDtos.add(new cameraDto(entity.getCamId(), entity.getCamName(),
                 entity.getAreaId(), entity.getResource(), entity.getConnectionState(), entity.getSecurityLevel())));
         return cameraDtos;

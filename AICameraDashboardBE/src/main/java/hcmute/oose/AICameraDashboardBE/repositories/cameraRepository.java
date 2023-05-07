@@ -5,5 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 
 public interface cameraRepository extends MongoRepository<cameraEntity, String> {
+
+    boolean existsByCamId(String id);
     
 }
