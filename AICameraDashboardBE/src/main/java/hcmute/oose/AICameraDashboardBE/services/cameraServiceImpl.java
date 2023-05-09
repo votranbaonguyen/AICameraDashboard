@@ -1,8 +1,10 @@
 package hcmute.oose.AICameraDashboardBE.services;
 
+import hcmute.oose.AICameraDashboardBE.dtos.areaDto;
 import hcmute.oose.AICameraDashboardBE.dtos.camera.cameraDto;
+import hcmute.oose.AICameraDashboardBE.entities.areaEntity;
 import hcmute.oose.AICameraDashboardBE.entities.cameraEntity;
-import hcmute.oose.AICameraDashboardBE.exceptions.ExceptionCustom;
+import hcmute.oose.AICameraDashboardBE.repositories.areaRepository;
 import hcmute.oose.AICameraDashboardBE.repositories.cameraRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,24 +16,42 @@ import java.util.Optional;
 public class cameraServiceImpl implements cameraService {
 
     private final cameraRepository cameraRepository;
+    private final areaServiceImpl areaService;
 
-    public cameraServiceImpl(cameraRepository cameraRepo) {
+    public cameraServiceImpl(cameraRepository cameraRepo, hcmute.oose.AICameraDashboardBE.repositories.areaRepository areaRepository, areaServiceImpl areaService) {
         this.cameraRepository = cameraRepo;
+        this.areaService = areaService;
     }
 
     @Override
     public void addCamera(cameraDto dto) {
-        cameraEntity temp = new cameraEntity(null, dto.getCamName(), dto.getAreaId(), dto.getResource(),
+
+        areaDto areaDto = areaService.getOneArea(dto.getArea().getAreaId());
+
+        cameraEntity temp = new cameraEntity(null, dto.getCamName(), areaDto, dto.getResource(),
                 dto.getConnectionState(), dto.getSecurityLevel());
 
-        cameraRepository.save(temp);
+        cameraRepository.insert(temp);
+
+        cameraDto newDto = new cameraDto(temp.getCamId(), temp.getCamName(), null, null,
+                null, null);
+        areaDto.setCamera(newDto);
+        areaService.updateArea(areaDto);
     }
 
     public boolean updateCamera(cameraDto dto){
         if (!cameraRepository.existsByCamId(dto.getCamId())){
             return false;
         }
-        cameraEntity temp = new cameraEntity(dto.getCamId(), dto.getCamName(), dto.getAreaId(),
+
+        areaDto x = areaService.getOneArea(dto.getArea().getAreaId());
+        cameraDto y = getInfoCamera(dto.getCamId());
+        if (!y.getArea().getAreaId().equals(x.getAreaId())){
+            x.setCamera(null);
+            areaService.updateArea(x);
+        }
+
+        cameraEntity temp = new cameraEntity(dto.getCamId(), dto.getCamName(), x,
                 dto.getResource(), dto.getConnectionState(), dto.getSecurityLevel());
         cameraRepository.save(temp);
         return true;
@@ -43,6 +63,11 @@ public class cameraServiceImpl implements cameraService {
         if(temp.isEmpty()){
             return false;
         }
+        cameraDto cameraDto = getInfoCamera(Id);
+        areaDto areaDto = areaService.getOneArea(cameraDto.getArea().getAreaId());
+        areaDto.setCamera(null);
+        areaService.updateArea(areaDto);
+
         cameraRepository.deleteById(Id);
         return true;
     }
@@ -54,7 +79,7 @@ public class cameraServiceImpl implements cameraService {
         }
         Optional<cameraEntity> temp = cameraRepository.findById(Id);
         cameraEntity x = temp.get();
-        cameraDto dto = new cameraDto(x.getCamId(), x.getCamName(), x.getAreaId(), x.getResource(),
+        cameraDto dto = new cameraDto(x.getCamId(), x.getCamName(), x.getArea(), x.getResource(),
                 x.getConnectionState(), x.getSecurityLevel());
         return dto;
     }
@@ -63,7 +88,7 @@ public class cameraServiceImpl implements cameraService {
         List<cameraEntity> cameras = cameraRepository.findAll();
         List<cameraDto> cameraDtos = new ArrayList<>();
         cameras.forEach(entity -> cameraDtos.add(new cameraDto(entity.getCamId(), entity.getCamName(),
-                entity.getAreaId(), entity.getResource(), entity.getConnectionState(), entity.getSecurityLevel())));
+                entity.getArea(), entity.getResource(), entity.getConnectionState(), entity.getSecurityLevel())));
         return cameraDtos;
     }
 }

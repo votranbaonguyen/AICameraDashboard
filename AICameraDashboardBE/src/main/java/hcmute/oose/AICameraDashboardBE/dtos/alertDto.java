@@ -1,19 +1,29 @@
 package hcmute.oose.AICameraDashboardBE.dtos;
 
-import hcmute.oose.AICameraDashboardBE.dtos.camera.cameraDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class areaDto {
+public class alertDto {
+
+    String alertId;
+
+    String content;
+
     String areaId;
 
-    cameraDto camera;
+    String securityLevel;
 
-    String areaName;
+    Date time;
+
+    String playBack;
+
+    String fromSettingId;
 }

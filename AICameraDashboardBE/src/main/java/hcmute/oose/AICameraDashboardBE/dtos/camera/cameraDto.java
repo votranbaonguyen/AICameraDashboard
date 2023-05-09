@@ -1,5 +1,6 @@
 package hcmute.oose.AICameraDashboardBE.dtos.camera;
 
+import hcmute.oose.AICameraDashboardBE.dtos.areaDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ public class cameraDto {
 
     String camId;
     String camName;
-    String areaId;
+    areaDto area;
     String resource;
     Boolean connectionState = true;
     String securityLevel;

@@ -1,6 +1,6 @@
+
 package hcmute.oose.AICameraDashboardBE.entities;
 
-import hcmute.oose.AICameraDashboardBE.dtos.areaDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,21 +8,27 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "cameras")
-public class cameraEntity extends BaseEntity{
+@Document(collection = "alertSettings")
+public class alertSettingEntity {
 
     @Id
-    String camId;
+    String alertSTId;
 
-    String camName;
-    areaDto area;
+    String alertName;
 
-    String resource;
+    LocalTime startTime;
 
-    Boolean connectionState = true;
-    String securityLevel;
+    LocalTime endTime;
+
+    String secLevel;
+
+    String imgLink;
+
+    String areaId;
 }

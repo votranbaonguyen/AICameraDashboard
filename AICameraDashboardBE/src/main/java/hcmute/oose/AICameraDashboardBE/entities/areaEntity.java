@@ -1,5 +1,6 @@
 package hcmute.oose.AICameraDashboardBE.entities;
 
+import hcmute.oose.AICameraDashboardBE.dtos.camera.cameraDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ public class areaEntity {
     @Id
     String areaId;
 
-    String camId;
+    cameraDto camera;
 
     String areaName;
 }
