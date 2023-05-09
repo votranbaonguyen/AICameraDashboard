@@ -39,8 +39,11 @@ public class alertSettingServiceImpl implements alertSettingService{
             return false;
         }
 
+        areaDto tmp = areaService.getOneArea(dto.getArea().getAreaId());
+        employeeDto emp = employeeService.getOneEmployee(dto.getEmployee().getEmployeeId());
+
         alertSettingEntity temp = new alertSettingEntity(dto.getAlertSTId(), dto.getAlertName(), dto.getStartTime(),
-                dto.getEndTime(), dto.getSecLevel(), dto.getEmployee(), dto.getArea());
+                dto.getEndTime(), dto.getSecLevel(), emp, tmp);
 
         alertSettingRepository.save(temp);
         return true;
