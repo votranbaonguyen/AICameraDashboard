@@ -61,7 +61,7 @@ public class areaServiceImpl implements areaService{
     public List<areaDto> getAllArea(){
         List<areaDto> dtos = new ArrayList<>();
         List<areaEntity> entities = areaRepository.findAll();
-        entities.forEach(x -> dtos.add(new areaDto(x.getAreaId(), x.getCamera(), x.getAreaId())));
+        entities.forEach(x -> dtos.add(new areaDto(x.getAreaId(), x.getCamera(), x.getAreaName())));
         return dtos;
     }
 }
