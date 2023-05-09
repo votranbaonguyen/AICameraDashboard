@@ -1,7 +1,9 @@
 package hcmute.oose.AICameraDashboardBE.services;
 
 import hcmute.oose.AICameraDashboardBE.dtos.areaDto;
+import hcmute.oose.AICameraDashboardBE.dtos.camera.cameraDto;
 import hcmute.oose.AICameraDashboardBE.entities.areaEntity;
+import hcmute.oose.AICameraDashboardBE.entities.cameraEntity;
 import hcmute.oose.AICameraDashboardBE.repositories.areaRepository;
 import hcmute.oose.AICameraDashboardBE.repositories.cameraRepository;
 import org.springframework.stereotype.Service;
@@ -42,10 +44,21 @@ public class areaServiceImpl implements areaService{
     public boolean deleteArea(String areaId){
         if(areaRepository.existsByAreaId(areaId)){
             areaRepository.deleteById(areaId);
+
+            List<cameraEntity> entities = cameraRepository.findByArea_AreaId(areaId);
+            if (!entities.isEmpty()){
+                entities.forEach(x -> {
+                    x.setArea(null);
+                    x.setConnectionState(false);
+                    cameraRepository.save(x);
+                });
+            }
+            
             return true;
         } else {
             return false;
         }
+
     }
 
     public areaDto getOneArea(String areaId){
