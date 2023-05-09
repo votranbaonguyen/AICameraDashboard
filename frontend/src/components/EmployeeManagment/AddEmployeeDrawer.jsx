@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { UploadImage } from './UploadImage';
 import { useDispatch, useSelector } from 'react-redux';
 import { addEmployee, getAllEmployee, updateEmployee } from '../../redux/employee/employeeSlice';
-const { Option } = Select;
+
 
 export const AddEmployeeDrawer = ({open, setOpen,drawerData,setDrawerData}) => {
   const [form] = Form.useForm();

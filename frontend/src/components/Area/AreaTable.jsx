@@ -1,47 +1,39 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table, Tag } from 'antd';
+import { Button, Input, Space, Table } from 'antd';
 import { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { useSelector } from 'react-redux';
-import ViewCameraModal from './ViewCameraModal';
 const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Joe Black',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Jim Green',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    name: 'Jim Red',
-    age: 32,
-    address: 'London No. 2 Lake Park',
-  },
-];
-
-export const MyCameraTable = ({ ChangeToInfoScreen }) => {
-  const { listCamera, loading } = useSelector(store => store.camera)
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [resource, setResource] = useState(null);
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
+    {
+      key: '1',
+      name: 'John Brown',
+      age: 32,
+      address: 'New York No. 1 Lake Park',
+    },
+    {
+      key: '2',
+      name: 'Joe Black',
+      age: 42,
+      address: 'London No. 1 Lake Park',
+    },
+    {
+      key: '3',
+      name: 'Jim Green',
+      age: 32,
+      address: 'Sydney No. 1 Lake Park',
+    },
+    {
+      key: '4',
+      name: 'Jim Red',
+      age: 32,
+      address: 'London No. 2 Lake Park',
+    },
+  ];
+const AreaTable = () => {
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
+  const {listArea,loading} = useSelector(store => store.area)
+  console.log(listArea)
   const searchInput = useRef(null);
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -148,69 +140,36 @@ export const MyCameraTable = ({ ChangeToInfoScreen }) => {
   });
   const columns = [
     {
+      title: 'Area Name',
+      dataIndex: 'areaName',
+      key: 'areaName',
+      width: '40%',
+      ...getColumnSearchProps('name'),
+    },
+    {
       title: 'Camera Name',
       dataIndex: 'camName',
       key: 'camName',
-      width: '30%',
-      ...getColumnSearchProps('camName'),
+      width: '40%',
+      ...getColumnSearchProps('age'),
+      render: (_,record) => {
+        return record.camera ? record.camera.camName : "No camera"
+      }
     },
     {
-      title: 'Area',
-      dataIndex: 'areaId',
-      key: 'areaId',
-      width: '20%',
-      ...getColumnSearchProps('areaId'),
-    },
-    {
-      title: 'Connection',
-      dataIndex: 'connectionState',
-      key: 'connectionState',
-      width: '20%',
-      render: (_, record) => {
-        if (record.connectionState) {
-          return <Tag color={'green'} key={"Connected"}>
-            Connected
-          </Tag>
-        } else {
-          return <Tag color={'volcano'} key={"Disconnected"}>
-            Disconnected
-          </Tag>
+        title: 'Action',
+        dataIndex: '',
+        key: 'action',
+        width: '15%',
+        render: (_,row) => {
+            return <>
+                <Button style={{marginRight:"10px"}}>Edit</Button>
+                <Button type='primary' danger>Delete</Button>
+            </>
         }
-      }
-    },
-    {
-      title: 'Security Level',
-      dataIndex: 'securityLevel',
-      key: 'securityLevel',
-    },
-    {
-      title: 'Action',
-      dataIndex: '',
-      key: 'action',
-      width: '15%',
-      render: (_, row) => {
-        return <>
-          <Button onClick={() => {ChangeToInfoScreen(row)}} style={{ marginRight: "10px" }}>Edit</Button>
-          <Button type='primary' danger>Delete</Button>
-        </>
-      }
     },
   ];
-  return (
-    <>
-      <ViewCameraModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} resource={resource} setResource={setResource} />
-      <Table
-        onRow={(record, rowIndex) => {
-          return {
-            onClick: () => {
-              setResource(record.resource)
-              showModal()
-            }
-          }
-        }}
-        columns={columns}
-        dataSource={listCamera}
-      />
-    </>
-  )
+  return <Table loading={loading} columns={columns} dataSource={listArea} />;
 }
+
+export default AreaTable
