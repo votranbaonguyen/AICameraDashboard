@@ -64,10 +64,11 @@ public class cameraServiceImpl implements cameraService {
             return false;
         }
         cameraDto cameraDto = getInfoCamera(Id);
-        areaDto areaDto = areaService.getOneArea(cameraDto.getArea().getAreaId());
-        areaDto.setCamera(null);
-        areaService.updateArea(areaDto);
-
+        if (cameraDto.getArea() != null){
+            areaDto areaDto = areaService.getOneArea(cameraDto.getArea().getAreaId());
+            areaDto.setCamera(null);
+            areaService.updateArea(areaDto);
+        }
         cameraRepository.deleteById(Id);
         return true;
     }
