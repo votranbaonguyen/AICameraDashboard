@@ -1,13 +1,45 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addArea, getAllArea, updateArea } from '../../redux/area/areaSlice';
 const { Option } = Select;
 
-const AreaDrawer = ({open,setOpen}) => {
- 
+const AreaDrawer = ({setAreaData,areaData, open, setOpen }) => {
+  const [form] = Form.useForm();
+  const dispatch = useDispatch()
+
   const onClose = () => {
+    setAreaData(null)
     setOpen(false);
   };
+
+  const handleSubmit = async (value) => {
+    
+    const data = {
+      areaName: value.areaName
+    }
+    if(areaData === null)
+      await dispatch(addArea(data))
+    else {
+      data["areaId"] = areaData.areaId
+      await dispatch(updateArea(data))
+    }
+    onClose()
+    dispatch(getAllArea())
+  }
+
+
+  useEffect(() => {
+    console.log(areaData)
+    if(areaData){
+      form.setFieldValue("areaName",areaData.areaName)
+    }else{
+      form.resetFields()
+    }
+  },[areaData])
+ 
+
   return (
     <>
       <Drawer
@@ -18,14 +50,14 @@ const AreaDrawer = ({open,setOpen}) => {
         bodyStyle={{
           paddingBottom: 80,
         }}
-      
+
       >
-        <Form layout="vertical" hideRequiredMark>
+        <Form form={form} onFinish={handleSubmit} layout="vertical" hideRequiredMark>
           <Row gutter={16}>
-            <Col span={12}>
+            <Col span={24}>
               <Form.Item
-                name="name"
-                label="Name"
+                name="areaName"
+                label="Area Name"
                 rules={[
                   {
                     required: true,
@@ -36,121 +68,25 @@ const AreaDrawer = ({open,setOpen}) => {
                 <Input placeholder="Please enter user name" />
               </Form.Item>
             </Col>
-            <Col span={12}>
-              <Form.Item
-                name="url"
-                label="Url"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please enter url',
-                  },
-                ]}
-              >
-                <Input
-                  style={{
-                    width: '100%',
-                  }}
-                  addonBefore="http://"
-                  addonAfter=".com"
-                  placeholder="Please enter url"
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="owner"
-                label="Owner"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please select an owner',
-                  },
-                ]}
-              >
-                <Select placeholder="Please select an owner">
-                  <Option value="xiao">Xiaoxiao Fu</Option>
-                  <Option value="mao">Maomao Zhou</Option>
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name="type"
-                label="Type"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please choose the type',
-                  },
-                ]}
-              >
-                <Select placeholder="Please choose the type">
-                  <Option value="private">Private</Option>
-                  <Option value="public">Public</Option>
-                </Select>
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="approver"
-                label="Approver"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please choose the approver',
-                  },
-                ]}
-              >
-                <Select placeholder="Please choose the approver">
-                  <Option value="jack">Jack Ma</Option>
-                  <Option value="tom">Tom Liu</Option>
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name="dateTime"
-                label="DateTime"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please choose the dateTime',
-                  },
-                ]}
-              >
-                <DatePicker.RangePicker
-                  style={{
-                    width: '100%',
-                  }}
-                  getPopupContainer={(trigger) => trigger.parentElement}
-                />
-              </Form.Item>
-            </Col>
+
           </Row>
           <Row gutter={16}>
             <Col span={24}>
               <Form.Item
-                name="description"
-                label="Description"
-                rules={[
-                  {
-                    required: true,
-                    message: 'please enter url description',
-                  },
-                ]}
+                name="cameraName"
+                label="Camera Name"
+
+               
               >
-                <Input.TextArea rows={4} placeholder="please enter url description" />
+               <Input disabled  placeholder={ areaData?.camera ? areaData.camera.camName : "No Camera"} />
               </Form.Item>
             </Col>
+
           </Row>
-          <Space  style={{width:"100%", justifyContent:"flex-end"}}>
+
+          <Space style={{ width: "100%", justifyContent: "flex-end" }}>
             <Button onClick={onClose}>Cancel</Button>
-            <Button  htmlType='submit' type="primary">
+            <Button htmlType='submit' type="primary">
               Submit
             </Button>
           </Space>

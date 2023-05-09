@@ -1,4 +1,4 @@
-import { UploadOutlined, UserOutlined, VideoCameraOutlined, PieChartOutlined, AlertOutlined, HomeOutlined, BarChartOutlined, PhoneOutlined, UserAddOutlined } from '@ant-design/icons';
+import { UploadOutlined, SettingOutlined, VideoCameraOutlined, PieChartOutlined, AlertOutlined, HomeOutlined, BarChartOutlined, PhoneOutlined, UserAddOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -44,8 +44,8 @@ const navItemList = [
   },
   {
     key: 6,
-    icon: <PhoneOutlined />,
-    label: "Cài đặt",
+    icon: <SettingOutlined />,
+    label: "Cài đặt Cảnh báo",
     path: "/setting"
   },
   {

@@ -17,7 +17,7 @@ export const Home = () => {
   const renderCamera = () => {
     return listCamera?.map((camera) => {
       return <Col span={12}>
-        {parseIframe(camera.resource)}
+        {parseIframe(camera.resource ? camera.resource : "<div style={{background: #0000}}></div>")}
       </Col>
     })
   }

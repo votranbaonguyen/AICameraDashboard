@@ -2,7 +2,9 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table } from 'antd';
 import { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteArea, getAllArea } from '../../redux/area/areaSlice';
+import { getAllCamera } from '../../redux/camera/cameraSlice';
 const data = [
     {
       key: '1',
@@ -29,11 +31,12 @@ const data = [
       address: 'London No. 2 Lake Park',
     },
   ];
-const AreaTable = () => {
+const AreaTable = ({showDrawerWithData}) => {
+  const dispatch = useDispatch()
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const {listArea,loading} = useSelector(store => store.area)
-  console.log(listArea)
+
   const searchInput = useRef(null);
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -138,6 +141,12 @@ const AreaTable = () => {
         text
       ),
   });
+
+  const handleDelete = async (record) => {
+    await dispatch(deleteArea(record.areaId))
+    dispatch(getAllArea())
+    dispatch(getAllCamera())
+  }
   const columns = [
     {
       title: 'Area Name',
@@ -163,8 +172,8 @@ const AreaTable = () => {
         width: '15%',
         render: (_,row) => {
             return <>
-                <Button style={{marginRight:"10px"}}>Edit</Button>
-                <Button type='primary' danger>Delete</Button>
+                <Button onClick={() => {showDrawerWithData(row)}} style={{marginRight:"10px"}}>Edit</Button>
+                <Button onClick={() => {handleDelete(row)}} type='primary' danger>Delete</Button>
             </>
         }
     },

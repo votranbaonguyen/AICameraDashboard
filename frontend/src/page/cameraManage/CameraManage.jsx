@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import CameraInfo from '../../components/CameraManagement/CameraInfo';
 
 export const CameraManage = () => {
-  const { listCamera } = useSelector(store => store.camera)
   const [screenStatus, setScreenStatus] = useState("table")
   const [cameraInfo,setCameraInfo] = useState(null)
 
@@ -13,6 +12,7 @@ export const CameraManage = () => {
     setScreenStatus("info")
     setCameraInfo(data)
   }
+
 
   return (
     <div>
@@ -22,7 +22,7 @@ export const CameraManage = () => {
           <MyCameraTable ChangeToInfoScreen={ChangeToInfoScreen}/>
         </div>
         :
-        <CameraInfo cameraInfo={cameraInfo}/>
+        <CameraInfo setCameraInfo={setCameraInfo} setScreenStatus={setScreenStatus} cameraInfo={cameraInfo}/>
       }
 
     </div>

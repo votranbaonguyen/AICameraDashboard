@@ -1,9 +1,60 @@
-import { Col, Form, Input, Row, Select, Tag } from 'antd'
-import React from 'react'
+import { Button, Col, Form, Input, Row, Select, Space, Tag } from 'antd'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { addCamera, getAllCamera, updateCamera } from '../../redux/camera/cameraSlice'
 
-const InfoForm = () => {
+const InfoForm = ({ cameraInfo, setScreenStatus }) => {
+    const { listArea, loading } = useSelector(store => store.area)
+    const [form] = Form.useForm();
+    const dispatch = useDispatch()
+
+    const RenderListCamera = () => (
+        listArea.map((area) => {
+            if (area.camera === null) {
+                return <Option key={area.areaId} value={area.areaId}>{area.areaName}</Option>
+            }
+        })
+    )
+
+    const handleSubmit = async (value) => {
+
+
+
+        if (cameraInfo !== null) {
+            const data = value
+
+            if (data.area === cameraInfo?.area?.areaName)
+                data.area = {
+                    areaId: cameraInfo?.area?.areaId
+                }
+            else data.area = {
+                areaId: value.area
+            }
+            data["resource"] = "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/MVPTGNGiI-4\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
+            data["camId"] = cameraInfo.camId
+       
+            await dispatch(updateCamera(data))
+        } else {
+            const data = value
+            data["area"] = {
+                areaId: value.area
+            }
+            data["resource"] = "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/MVPTGNGiI-4\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
+            await dispatch(addCamera(data))
+        }
+        dispatch(getAllCamera())
+        setScreenStatus("table")
+    }
+
+    useEffect(() => {
+        if (cameraInfo !== null) {
+            form.setFieldsValue(cameraInfo)
+            form.setFieldValue("area", cameraInfo?.area?.areaName)
+        }
+    }, [cameraInfo])
+
     return (
-        <Form layout="vertical" >
+        <Form form={form} onFinish={handleSubmit} layout="vertical" >
             <Row gutter={16}>
                 <Col span={24}>
                     <Form.Item
@@ -34,8 +85,7 @@ const InfoForm = () => {
                         ]}
                     >
                         <Select placeholder="Please select an owner">
-                            <Option value="xiao">Xiaoxiao Fu</Option>
-                            <Option value="mao">Maomao Zhou</Option>
+                            {RenderListCamera()}
                         </Select>
                     </Form.Item>
                 </Col>
@@ -53,7 +103,7 @@ const InfoForm = () => {
                             },
                         ]}
                     >
-                        <Select style={{display:"flex", alignItems:"center"}} placeholder="Please select an owner">
+                        <Select style={{ display: "flex", alignItems: "center" }} placeholder="Please select an owner">
                             <Option value={true}>
                                 Connected
                             </Option>
@@ -87,7 +137,12 @@ const InfoForm = () => {
                 </Col>
 
             </Row>
+            <Space style={{ width: "100%", justifyContent: "flex-end" }}>
 
+                <Button loading={loading} htmlType='submit' type="primary">
+                    Save
+                </Button>
+            </Space>
         </Form>
     )
 }

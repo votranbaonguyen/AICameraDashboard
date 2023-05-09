@@ -6,13 +6,17 @@ import {
   } from '@ant-design/icons';
 import InfoForm from './InfoForm';
 import { useDispatch } from 'react-redux';
+import { getAllEmployee } from './../../redux/employee/employeeSlice';
 import { getAllArea } from '../../redux/area/areaSlice';
 
-const CameraInfo = ({setCameraInfo,cameraInfo,setScreenStatus}) => {
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(getAllArea())
-  },[cameraInfo])
+
+
+const AlertSettingInfo = ({alertSettingInfo,setAlertSettingInfo,setScreenStatus}) => {
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getAllEmployee())
+        dispatch(getAllArea())
+    },[])
   return (
     <div>
         <Header
@@ -27,19 +31,19 @@ const CameraInfo = ({setCameraInfo,cameraInfo,setScreenStatus}) => {
           >
             <span onClick={() => {
               setScreenStatus("table")
-              setCameraInfo(null)
+              setAlertSettingInfo(null)
               }} style={{fontSize:"18px", cursor:"pointer"}}>
                 <ArrowLeftOutlined style={{fontSize:"18px", marginRight:"10px"}}/>
                 Go Back
             </span>
            
-            <h1>{cameraInfo !== null ? "Edit Camera" : "Add New Camera"}</h1>
+            <h1>{alertSettingInfo !== null ? "Edit Alert Setting" : "Add New Alert Setting"}</h1>
           </Header>
           <div style={{width: "45%", marginLeft:"auto",marginRight:"auto",marginTop:"20px"}}>
-            <InfoForm setScreenStatus={setScreenStatus} cameraInfo={cameraInfo}/>
+            <InfoForm/>
           </div>
     </div>
   )
 }
 
-export default CameraInfo
+export default AlertSettingInfo

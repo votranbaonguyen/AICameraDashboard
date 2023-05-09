@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { getAllCameraApi } from "../../utils/api/camera";
+import { addCameraApi, deleteCameraApi, getAllCameraApi, updateCameraApi } from "../../utils/api/camera";
 
 const initialState = {
   loading: false,
@@ -17,10 +17,54 @@ export const getAllCamera = createAsyncThunk(
     });
     res = JSON.stringify(res);
     res = JSON.parse(res);
-    console.log(res)
     return res.data.data;
   }
 );
+
+export const addCamera = createAsyncThunk(
+  "camera/addCamera",
+  async (data) => {
+    let res;
+    res = await axios({
+      url: addCameraApi(),
+      method: "POST",
+      data: data
+    });
+    res = JSON.stringify(res);
+    res = JSON.parse(res);
+    return res
+  }
+);
+
+export const updateCamera = createAsyncThunk(
+  "camera/updateCamera",
+  async (data) => {
+    let res;
+    res = await axios({
+      url: updateCameraApi(),
+      method: "PUT",
+      data: data
+    });
+    res = JSON.stringify(res);
+    res = JSON.parse(res);
+    return res
+  }
+);
+
+export const deleteCamera = createAsyncThunk(
+  "camera/deleteCamera",
+  async (cameraId) => {
+    let res;
+    res = await axios({
+      url: deleteCameraApi(cameraId),
+      method: "DELETE"
+    });
+    res = JSON.stringify(res);
+    res = JSON.parse(res);
+    return res
+  }
+);
+
 
 export const cameraSlice = createSlice({
   name: "counter",
@@ -32,12 +76,51 @@ export const cameraSlice = createSlice({
     });
 
     builder.addCase(getAllCamera.fulfilled, (state, action) => {
-        console.log(action.payload)
       state.listCamera = action.payload
+      state.loading = false;
       state.isLogin = true;
     });
 
     builder.addCase(getAllCamera.rejected, (state) => {
+      state.loading = false;
+    });
+
+    builder.addCase(addCamera.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(addCamera.fulfilled, (state, action) => {
+     
+      state.loading = false;
+    });
+
+    builder.addCase(addCamera.rejected, (state) => {
+      state.loading = false;
+    });
+
+    builder.addCase(updateCamera.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(updateCamera.fulfilled, (state, action) => {
+      console.log(action.payload)
+      state.loading = false;
+    });
+
+    builder.addCase(updateCamera.rejected, (state) => {
+      state.loading = false;
+    });
+
+    builder.addCase(deleteCamera.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(deleteCamera.fulfilled, (state, action) => {
+      console.log(action.payload)
+      state.loading = false;
+    });
+
+    builder.addCase(deleteCamera.rejected, (state) => {
       state.loading = false;
     });
   },

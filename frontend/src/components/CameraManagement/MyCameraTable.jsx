@@ -2,8 +2,9 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table, Tag } from 'antd';
 import { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ViewCameraModal from './ViewCameraModal';
+import { deleteCamera, getAllCamera } from '../../redux/camera/cameraSlice';
 const data = [
   {
     key: '1',
@@ -33,7 +34,8 @@ const data = [
 
 export const MyCameraTable = ({ ChangeToInfoScreen }) => {
   const { listCamera, loading } = useSelector(store => store.camera)
-
+  console.log(loading)
+  const dispatch = useDispatch()
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [resource, setResource] = useState(null);
   const showModal = () => {
@@ -160,6 +162,9 @@ export const MyCameraTable = ({ ChangeToInfoScreen }) => {
       key: 'areaId',
       width: '20%',
       ...getColumnSearchProps('areaId'),
+      render: (_,record) =>{
+        return record.area ? record.area.areaName : "No Area"
+      }
     },
     {
       title: 'Connection',
@@ -191,7 +196,10 @@ export const MyCameraTable = ({ ChangeToInfoScreen }) => {
       render: (_, row) => {
         return <>
           <Button onClick={() => {ChangeToInfoScreen(row)}} style={{ marginRight: "10px" }}>Edit</Button>
-          <Button type='primary' danger>Delete</Button>
+          <Button className='delete-btn' onClick={async () => {
+            await dispatch(deleteCamera(row.camId))
+            dispatch(getAllCamera())
+            }} type='primary' danger>Delete</Button>
         </>
       }
     },
@@ -202,14 +210,17 @@ export const MyCameraTable = ({ ChangeToInfoScreen }) => {
       <Table
         onRow={(record, rowIndex) => {
           return {
-            onClick: () => {
-              setResource(record.resource)
-              showModal()
+            onClick: (e) => {
+              if(!e.target.parentNode.classList.contains("delete-btn")){
+                showModal()
+                setResource(record.resource)
+              }
             }
           }
         }}
         columns={columns}
         dataSource={listCamera}
+        loading={loading}
       />
     </>
   )

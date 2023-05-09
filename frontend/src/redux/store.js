@@ -3,6 +3,7 @@ import authenticationSlice from './authentication/authenticationSlice'
 import cameraSlice from './camera/cameraSlice'
 import employeeSlice from './employee/employeeSlice'
 import areaSlice from './area/areaSlice'
+import alertSettingSlice from './alertSetting/alertSettingSlice'
 
 
 export const store = configureStore({
@@ -10,6 +11,7 @@ export const store = configureStore({
     authentication: authenticationSlice,
     camera: cameraSlice,
     employeeSlice,
-    area: areaSlice
+    area: areaSlice,
+    alertSetting: alertSettingSlice
   },
 })
