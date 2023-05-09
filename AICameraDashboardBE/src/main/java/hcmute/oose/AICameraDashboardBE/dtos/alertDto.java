@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -21,9 +22,9 @@ public class alertDto {
 
     String securityLevel;
 
-    Date time;
+    LocalDate time;
 
     String playBack;
 
-    String fromSettingId;
+    alertSettingDto alertSetting;
 }

@@ -1,6 +1,7 @@
 
 package hcmute.oose.AICameraDashboardBE.entities;
 
+import hcmute.oose.AICameraDashboardBE.dtos.areaDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,5 +31,5 @@ public class alertSettingEntity {
 
     String imgLink;
 
-    String areaId;
+    areaDto area;
 }

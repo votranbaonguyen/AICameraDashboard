@@ -1,22 +1,31 @@
 package hcmute.oose.AICameraDashboardBE.services;
 
 import hcmute.oose.AICameraDashboardBE.dtos.alertSettingDto;
+import hcmute.oose.AICameraDashboardBE.dtos.areaDto;
 import hcmute.oose.AICameraDashboardBE.entities.alertSettingEntity;
 import hcmute.oose.AICameraDashboardBE.repositories.alertSettingRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class alertSettingServiceImpl implements alertSettingService{
 
     private final alertSettingRepository alertSettingRepository;
+    private final areaServiceImpl areaService;
 
-    public alertSettingServiceImpl(hcmute.oose.AICameraDashboardBE.repositories.alertSettingRepository alertSettingRepository) {
+    public alertSettingServiceImpl(hcmute.oose.AICameraDashboardBE.repositories.alertSettingRepository alertSettingRepository, areaServiceImpl areaService) {
         this.alertSettingRepository = alertSettingRepository;
+        this.areaService = areaService;
     }
 
     public void addAlertST(alertSettingDto dto){
+        areaDto tmp = areaService.getOneArea(dto.getArea().getAreaId());
+
         alertSettingEntity temp = new alertSettingEntity(null, dto.getAlertName(), dto.getStartTime(),
-                dto.getEndTime(), dto.getSecLevel(), dto.getImgLink(), dto.getAreaId());
+                dto.getEndTime(), dto.getSecLevel(), dto.getImgLink(), tmp);
 
         alertSettingRepository.insert(temp);
     }
@@ -27,13 +36,41 @@ public class alertSettingServiceImpl implements alertSettingService{
         }
 
         alertSettingEntity temp = new alertSettingEntity(dto.getAlertSTId(), dto.getAlertName(), dto.getStartTime(),
-                dto.getEndTime(), dto.getSecLevel(), dto.getImgLink(), dto.getAreaId());
+                dto.getEndTime(), dto.getSecLevel(), dto.getImgLink(), dto.getArea());
 
         alertSettingRepository.save(temp);
         return true;
     }
 
-//    public boolean deleleAlertST(String id){
-//
-//    }
+    public boolean deleteAlertST(String id){
+        if (!alertSettingRepository.existsByAlertSTId(id)){
+            return false;
+        }
+
+        alertSettingRepository.deleteById(id);
+        return true;
+    }
+
+    public alertSettingDto getOneAlertST(String id){
+        if (!alertSettingRepository.existsByAlertSTId(id)){
+            return null;
+        }
+
+        Optional<alertSettingEntity> temp = alertSettingRepository.findById(id);
+        alertSettingEntity x = temp.get();
+        alertSettingDto dto = new alertSettingDto(x.getAlertSTId(), x.getAlertName(), x.getStartTime(), x.getEndTime(),
+                x.getSecLevel(), x.getImgLink(), x.getArea());
+
+        return dto;
+    }
+
+    public List<alertSettingDto> getAllAlertST(){
+        List<alertSettingEntity> entities = alertSettingRepository.findAll();
+        List<alertSettingDto> dtos = new ArrayList<>();
+
+        entities.forEach(x -> dtos.add(new alertSettingDto(x.getAlertSTId(), x.getAlertName(), x.getStartTime(),
+                x.getEndTime(), x.getSecLevel(), x.getImgLink(), x.getArea())));
+
+        return dtos;
+    }
 }

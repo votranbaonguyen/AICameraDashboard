@@ -25,5 +25,5 @@ public class alertSettingDto {
 
     String imgLink;
 
-    String areaId;
+    areaDto area;
 }
