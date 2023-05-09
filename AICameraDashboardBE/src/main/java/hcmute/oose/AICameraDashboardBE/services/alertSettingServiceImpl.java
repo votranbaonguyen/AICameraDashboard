@@ -2,6 +2,7 @@ package hcmute.oose.AICameraDashboardBE.services;
 
 import hcmute.oose.AICameraDashboardBE.dtos.alertSettingDto;
 import hcmute.oose.AICameraDashboardBE.dtos.areaDto;
+import hcmute.oose.AICameraDashboardBE.dtos.employeeDto;
 import hcmute.oose.AICameraDashboardBE.entities.alertSettingEntity;
 import hcmute.oose.AICameraDashboardBE.repositories.alertSettingRepository;
 import org.springframework.stereotype.Service;
@@ -15,17 +16,20 @@ public class alertSettingServiceImpl implements alertSettingService{
 
     private final alertSettingRepository alertSettingRepository;
     private final areaServiceImpl areaService;
+    private final employeeServiceImpl employeeService;
 
-    public alertSettingServiceImpl(hcmute.oose.AICameraDashboardBE.repositories.alertSettingRepository alertSettingRepository, areaServiceImpl areaService) {
+    public alertSettingServiceImpl(hcmute.oose.AICameraDashboardBE.repositories.alertSettingRepository alertSettingRepository, areaServiceImpl areaService, employeeServiceImpl employeeService) {
         this.alertSettingRepository = alertSettingRepository;
         this.areaService = areaService;
+        this.employeeService = employeeService;
     }
 
     public void addAlertST(alertSettingDto dto){
         areaDto tmp = areaService.getOneArea(dto.getArea().getAreaId());
+        employeeDto emp = employeeService.getOneEmployee(dto.getEmployee().getEmployeeId());
 
         alertSettingEntity temp = new alertSettingEntity(null, dto.getAlertName(), dto.getStartTime(),
-                dto.getEndTime(), dto.getSecLevel(), dto.getImgLink(), tmp);
+                dto.getEndTime(), dto.getSecLevel(), emp, tmp);
 
         alertSettingRepository.insert(temp);
     }
@@ -36,7 +40,7 @@ public class alertSettingServiceImpl implements alertSettingService{
         }
 
         alertSettingEntity temp = new alertSettingEntity(dto.getAlertSTId(), dto.getAlertName(), dto.getStartTime(),
-                dto.getEndTime(), dto.getSecLevel(), dto.getImgLink(), dto.getArea());
+                dto.getEndTime(), dto.getSecLevel(), dto.getEmployee(), dto.getArea());
 
         alertSettingRepository.save(temp);
         return true;
@@ -59,7 +63,7 @@ public class alertSettingServiceImpl implements alertSettingService{
         Optional<alertSettingEntity> temp = alertSettingRepository.findById(id);
         alertSettingEntity x = temp.get();
         alertSettingDto dto = new alertSettingDto(x.getAlertSTId(), x.getAlertName(), x.getStartTime(), x.getEndTime(),
-                x.getSecLevel(), x.getImgLink(), x.getArea());
+                x.getSecLevel(), x.getEmployee(), x.getArea());
 
         return dto;
     }
@@ -69,7 +73,7 @@ public class alertSettingServiceImpl implements alertSettingService{
         List<alertSettingDto> dtos = new ArrayList<>();
 
         entities.forEach(x -> dtos.add(new alertSettingDto(x.getAlertSTId(), x.getAlertName(), x.getStartTime(),
-                x.getEndTime(), x.getSecLevel(), x.getImgLink(), x.getArea())));
+                x.getEndTime(), x.getSecLevel(), x.getEmployee(), x.getArea())));
 
         return dtos;
     }

@@ -23,7 +23,7 @@ public class alertSettingDto {
 
     String secLevel;
 
-    String imgLink;
+    employeeDto employee;
 
     areaDto area;
 }

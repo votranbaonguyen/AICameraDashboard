@@ -2,6 +2,7 @@
 package hcmute.oose.AICameraDashboardBE.entities;
 
 import hcmute.oose.AICameraDashboardBE.dtos.areaDto;
+import hcmute.oose.AICameraDashboardBE.dtos.employeeDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,7 +30,7 @@ public class alertSettingEntity {
 
     String secLevel;
 
-    String imgLink;
+    employeeDto employee;
 
     areaDto area;
 }
