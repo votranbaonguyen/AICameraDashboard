@@ -26,7 +26,7 @@ public class alertServiceImpl implements  alertService{
         alertSettingDto mySetting = alertSettingService.getOneAlertST(dto.getAlertSetting().getAlertSTId());
 
         alertEntity temp = new alertEntity(null, mySetting.getAlertName(), mySetting.getArea().getAreaId(),
-                mySetting.getSecLevel(), LocalDate.now(), dto.getPlayBack(), mySetting);
+                mySetting.getSecLevel(), dto.getTime(), dto.getPlayBack(), mySetting);
         alertRepository.save(temp);
     }
 
