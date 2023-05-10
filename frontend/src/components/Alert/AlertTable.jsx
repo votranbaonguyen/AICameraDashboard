@@ -1,47 +1,11 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table, Tag } from 'antd';
+import { Button, Input, Space, Table } from 'antd';
 import { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
-import { useDispatch, useSelector } from 'react-redux';
-import ViewCameraModal from './ViewCameraModal';
-import { deleteCamera, getAllCamera } from '../../redux/camera/cameraSlice';
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Joe Black',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Jim Green',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    name: 'Jim Red',
-    age: 32,
-    address: 'London No. 2 Lake Park',
-  },
-];
+import { useSelector } from 'react-redux';
 
-export const MyCameraTable = ({ ChangeToInfoScreen }) => {
-  const { listCamera, loading } = useSelector(store => store.camera)
-  console.log(loading)
-  const dispatch = useDispatch()
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [resource, setResource] = useState(null);
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
+const AlertTable = ({changeToInfoScreen}) => {
+    const {alertList} = useSelector(store => store.alert)
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
@@ -150,79 +114,43 @@ export const MyCameraTable = ({ ChangeToInfoScreen }) => {
   });
   const columns = [
     {
-      title: 'Camera Name',
-      dataIndex: 'camName',
-      key: 'camName',
-      width: '30%',
-      ...getColumnSearchProps('camName'),
-    },
-    {
-      title: 'Area',
-      dataIndex: 'areaId',
-      key: 'areaId',
-      width: '20%',
-      ...getColumnSearchProps('areaId'),
-      render: (_,record) =>{
-        return record.area ? record.area.areaName : "No Area"
+      title: 'Alert Type',
+      dataIndex: 'alertType',
+      key: 'alertType',
+     
+      ...getColumnSearchProps('alertType'),
+      render:(_,record) => {
+        return record.alertSetting.alertName
       }
     },
     {
-      title: 'Connection',
-      dataIndex: 'connectionState',
-      key: 'connectionState',
+      title: 'Time',
+      dataIndex: 'time',
+      key: 'time',
       width: '20%',
-      render: (_, record) => {
-        if (record.connectionState) {
-          return <Tag color={'green'} key={"Connected"}>
-            Connected
-          </Tag>
-        } else {
-          return <Tag color={'volcano'} key={"Disconnected"}>
-            Disconnected
-          </Tag>
+      ...getColumnSearchProps('time'),
+    },
+    {
+        title: 'Security Level',
+        dataIndex: 'securityLevel',
+        key: 'securityLevel',
+        width: '20%',
+        ...getColumnSearchProps('securityLevel'),
+      },
+      {
+        title: 'Action',
+        dataIndex: '',
+        key: 'action',
+        width: '15%',
+        render: (_,row) => {
+            return <>
+                <Button onClick={() => {changeToInfoScreen(row)}} style={{marginRight:"10px"}}>View Detail</Button>
+                
+            </>
         }
-      }
-    },
-    {
-      title: 'Security Level',
-      dataIndex: 'securityLevel',
-      key: 'securityLevel',
-    },
-    {
-      title: 'Action',
-      dataIndex: '',
-      key: 'action',
-      width: '15%',
-      render: (_, row) => {
-        return <>
-          <Button onClick={() => {ChangeToInfoScreen(row)}} style={{ marginRight: "10px" }}>Edit</Button>
-          <Button className='delete-btn' onClick={async () => {
-            await dispatch(deleteCamera(row.camId))
-            dispatch(getAllCamera())
-            }} type='primary' danger>Delete</Button>
-        </>
-      }
     },
   ];
-  return (
-    <>
-      <ViewCameraModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} resource={resource} setResource={setResource} />
-      <Table
-      pagination={{pageSize: 6}}
-        onRow={(record, rowIndex) => {
-          return {
-            onClick: (e) => {
-              if(!e.target.parentNode.classList.contains("delete-btn")){
-                showModal()
-                setResource(record.resource)
-              }
-            }
-          }
-        }}
-        columns={columns}
-        dataSource={listCamera}
-        loading={loading}
-      />
-    </>
-  )
+  return <Table columns={columns} dataSource={alertList} />;
 }
+
+export default AlertTable

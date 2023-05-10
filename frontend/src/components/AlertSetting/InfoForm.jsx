@@ -4,26 +4,16 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { TimePicker } from 'antd';
 import { useState } from 'react';
+import { useForm } from 'antd/es/form/Form';
 import dayjs from 'dayjs';
+import { addAlertSetting, getAllAlertSetting, updateAlertSetting } from '../../redux/alertSetting/alertSettingSlice';
+const InfoForm = ({alertSettingInfo,ChangeToTableScreen}) => {
+    const dispatch = useDispatch()
 
-
-const a = new Date()
-const InfoForm = () => {
-    const [startTime, setStartTime] = useState();
-    const [endTime, setEndTime] = useState(null);
-
+    const [form] = useForm()
     const { listEmployee } = useSelector(store => store.employeeSlice)
     const { listArea } = useSelector(store => store.area)
-    const onChangeStart = (time) => {
-        let a = time.$d.toString()
-        setStartTime(a.split(" ")[4])
 
-    };
-
-    const onChangeEnd = (time) => {
-        let a = time.$d.toString()
-        setEndTime(a.split(" ")[4])
-    };
 
     const renderEmployeeList = () => {
         return listEmployee.map((employee) => {
@@ -40,8 +30,49 @@ const InfoForm = () => {
             </Option>
         })
     }
+
+    const handleSubmit = async (value) => {
+        const startTime = value.startTime.$d.toString().split(" ")[4]
+        const endTime = value.endTime.$d.toString().split(" ")[4]
+        const data = {
+            alertName: value.alertName,
+            startTime,
+            endTime,
+            secLevel: value.securityLevel,
+            employee: {
+                employeeId: value.employee
+            },
+            imgLink: "https://firebasestorage.googleapis.com/v0/b/mobileappmusicplay.appspot.com/o/HDT%2FAnh3x4.jpg?alt=media&token=89f740e7-404b-4f29-b937-d7e2dea009c2",
+            area: {
+                areaId: value.area
+            }
+        }
+        if(alertSettingInfo !== null){
+            data["alertSTId"]=alertSettingInfo.alertSTId
+            await dispatch(updateAlertSetting(data))
+        }
+        else await dispatch(addAlertSetting(data))
+        ChangeToTableScreen()
+        dispatch(getAllAlertSetting())
+    }
+
+    useEffect(() => {
+        if(alertSettingInfo !== null){
+            // form.setFieldsValue(alertSettingInfo)
+            form.setFieldsValue({
+                alertName: alertSettingInfo.alertName,
+                startTime: dayjs(alertSettingInfo.startTime, 'HH:mm:ss'),
+                endTime: dayjs(alertSettingInfo.endTime, 'HH:mm:ss'),
+                employee: alertSettingInfo.employee.employeeId,
+                area: alertSettingInfo.area.areaId,
+                securityLevel: alertSettingInfo.secLevel
+            })
+        }
+        console.log(alertSettingInfo)
+        // form.setFieldValue("startTime", dayjs('12:08:23', 'HH:mm:ss'))
+    },[])
     return (
-        <Form layout="vertical" >
+        <Form form={form} onFinish={handleSubmit} layout="vertical" >
             <Row gutter={16}>
                 <Col span={24}>
                     <Form.Item
@@ -71,7 +102,7 @@ const InfoForm = () => {
                             },
                         ]}
                     >
-                        <TimePicker defaultValue={dayjs('12:08:23', 'HH:mm:ss')} onChange={onChangeStart} value={startTime} />
+                        <TimePicker />
                     </Form.Item>
                 </Col>
                 <Col span={12}>
@@ -85,7 +116,7 @@ const InfoForm = () => {
                             },
                         ]}
                     >
-                        <TimePicker onChange={onChangeEnd} value={endTime} />
+                        <TimePicker  />
                     </Form.Item>
                 </Col>
             </Row>
@@ -122,6 +153,28 @@ const InfoForm = () => {
                     >
                         <Select placeholder="Please select an owner">
                            {renderAreaList()}
+                        </Select>
+                    </Form.Item>
+                </Col>
+
+            </Row>
+            <Row gutter={16}>
+                <Col span={24}>
+                    <Form.Item
+                        name="securityLevel"
+                        label="Security Level"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please select an owner',
+                            },
+                        ]}
+                    >
+                        <Select placeholder="Please select an owner">
+                            <Option value="low">Low</Option>
+                            <Option value="medium">Medium</Option>
+                            <Option value="high">High</Option>
+                            <Option value="emergency">Emergency</Option>
                         </Select>
                     </Form.Item>
                 </Col>

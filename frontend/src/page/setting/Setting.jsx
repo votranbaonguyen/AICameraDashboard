@@ -15,6 +15,11 @@ export const Setting = () => {
     setAlertSettingInfo(data)
   }
 
+  const ChangeToTableScreen = () => {
+    setScreenStatus("table")
+    setAlertSettingInfo(null)
+  }
+
   useEffect(() => {
     dispatch(getAllAlertSetting())
   }, [])
@@ -23,10 +28,10 @@ export const Setting = () => {
       {screenStatus === "table" ?
         <div>
           <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "20px" }}><Button onClick={() => ChangeToInfoScreen(null)} type="primary">Add New Alert Setting</Button></div>
-          <AlertSettingTable />
+          <AlertSettingTable ChangeToInfoScreen={ChangeToInfoScreen}/>
         </div>
         :
-        <AlertSettingInfo setAlertSettingInfo={setAlertSettingInfo} setScreenStatus={setScreenStatus} alertSettingInfo={alertSettingInfo}/>
+        <AlertSettingInfo ChangeToTableScreen={ChangeToTableScreen} setAlertSettingInfo={setAlertSettingInfo} setScreenStatus={setScreenStatus} alertSettingInfo={alertSettingInfo}/>
       }
     </div>
   )

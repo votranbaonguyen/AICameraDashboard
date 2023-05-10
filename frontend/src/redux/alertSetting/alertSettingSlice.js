@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { getAllAlertSettingApi } from "../../utils/api/alertSetting";
+import { addAlertSettingApi, getAllAlertSettingApi, updateAlertSettingApi } from "../../utils/api/alertSetting";
 
 
 const initialState = {
@@ -22,35 +22,35 @@ export const getAllAlertSetting = createAsyncThunk(
   }
 );
 
-// export const addCamera = createAsyncThunk(
-//   "camera/addCamera",
-//   async (data) => {
-//     let res;
-//     res = await axios({
-//       url: addCameraApi(),
-//       method: "POST",
-//       data: data
-//     });
-//     res = JSON.stringify(res);
-//     res = JSON.parse(res);
-//     return res
-//   }
-// );
+export const addAlertSetting = createAsyncThunk(
+  "alertSetting/addAlertSetting",
+  async (data) => {
+    let res;
+    res = await axios({
+      url: addAlertSettingApi(),
+      method: "POST",
+      data: data
+    });
+    res = JSON.stringify(res);
+    res = JSON.parse(res);
+    return res
+  }
+);
 
-// export const updateCamera = createAsyncThunk(
-//   "camera/updateCamera",
-//   async (data) => {
-//     let res;
-//     res = await axios({
-//       url: updateCameraApi(),
-//       method: "PUT",
-//       data: data
-//     });
-//     res = JSON.stringify(res);
-//     res = JSON.parse(res);
-//     return res
-//   }
-// );
+export const updateAlertSetting = createAsyncThunk(
+  "alertSetting/updateAlertSetting",
+  async (data) => {
+    let res;
+    res = await axios({
+      url: updateAlertSettingApi(),
+      method: "PUT",
+      data: data
+    });
+    res = JSON.stringify(res);
+    res = JSON.parse(res);
+    return res
+  }
+);
 
 // export const deleteCamera = createAsyncThunk(
 //   "camera/deleteCamera",
@@ -86,31 +86,31 @@ export const alertSettingSlice = createSlice({
       state.loading = false;
     });
 
-    // builder.addCase(addCamera.pending, (state) => {
-    //   state.loading = true;
-    // });
+    builder.addCase(addAlertSetting.pending, (state) => {
+      state.loading = true;
+    });
 
-    // builder.addCase(addCamera.fulfilled, (state, action) => {
-     
-    //   state.loading = false;
-    // });
+    builder.addCase(addAlertSetting.fulfilled, (state, action) => {
+      console.log(action.payload)
+      state.loading = false;
+    });
 
-    // builder.addCase(addCamera.rejected, (state) => {
-    //   state.loading = false;
-    // });
+    builder.addCase(addAlertSetting.rejected, (state) => {
+      state.loading = false;
+    });
 
-    // builder.addCase(updateCamera.pending, (state) => {
-    //   state.loading = true;
-    // });
+    builder.addCase(updateAlertSetting.pending, (state) => {
+      state.loading = true;
+    });
 
-    // builder.addCase(updateCamera.fulfilled, (state, action) => {
-    //   console.log(action.payload)
-    //   state.loading = false;
-    // });
+    builder.addCase(updateAlertSetting.fulfilled, (state, action) => {
+      console.log(action.payload)
+      state.loading = false;
+    });
 
-    // builder.addCase(updateCamera.rejected, (state) => {
-    //   state.loading = false;
-    // });
+    builder.addCase(updateAlertSetting.rejected, (state) => {
+      state.loading = false;
+    });
 
     // builder.addCase(deleteCamera.pending, (state) => {
     //   state.loading = true;

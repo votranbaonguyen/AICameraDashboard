@@ -26,34 +26,37 @@ const navItemList = [
   },
   {
     key: 3,
-    icon: <HomeOutlined />,
-    label: "Khu vực",
-    path: "/area"
-  },
-  {
-    key: 4,
-    icon: <BarChartOutlined />,
-    label: "Thống kê",
-    path: "/static"
-  },
-  {
-    key: 5,
-    icon: <PhoneOutlined />,
-    label: "Liên hệ",
-    path: "/contact"
-  },
-  {
-    key: 6,
     icon: <SettingOutlined />,
     label: "Cài đặt Cảnh báo",
     path: "/setting"
   },
   {
-    key: 7,
+    key: 4,
+    icon: <HomeOutlined />,
+    label: "Khu vực",
+    path: "/area"
+  },
+  
+  {
+    key: 5,
     icon: <UserAddOutlined />,
-    label: "Đăng kí",
+    label: "Nhân Viên",
     path: "/employees"
   },
+  {
+    key: 6,
+    icon: <BarChartOutlined />,
+    label: "Thống kê",
+    path: "/static"
+  },
+  {
+    key: 7,
+    icon: <PhoneOutlined />,
+    label: "Liên hệ",
+    path: "/contact"
+  },
+
+  
 ]
 
 export const HomeTemplate = () => {

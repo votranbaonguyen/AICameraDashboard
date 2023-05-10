@@ -4,13 +4,13 @@ export const getAllAlertSettingApi = () => (
     `${host}/api/alertsetting/all`
 )
 
-// export const addCameraApi = () => (
-//     `${host}/api/camera`
-// )
+export const addAlertSettingApi = () => (
+    `${host}/api/alertsetting`
+)
 
-// export const updateCameraApi = () => (
-//     `${host}/api/camera`
-// )
+export const updateAlertSettingApi = () => (
+    `${host}/api/alertsetting`
+)
 
 // export const deleteCameraApi = (cameraId) => (
 //     `${host}/api/camera?id=${cameraId}`

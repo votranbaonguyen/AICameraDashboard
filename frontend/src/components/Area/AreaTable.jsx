@@ -178,7 +178,7 @@ const AreaTable = ({showDrawerWithData}) => {
         }
     },
   ];
-  return <Table loading={loading} columns={columns} dataSource={listArea} />;
+  return <Table pagination={{pageSize: 6}} loading={loading} columns={columns} dataSource={listArea} />;
 }
 
 export default AreaTable

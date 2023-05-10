@@ -11,7 +11,7 @@ import { getAllArea } from '../../redux/area/areaSlice';
 
 
 
-const AlertSettingInfo = ({alertSettingInfo,setAlertSettingInfo,setScreenStatus}) => {
+const AlertSettingInfo = ({ChangeToTableScreen,alertSettingInfo,setAlertSettingInfo,setScreenStatus}) => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getAllEmployee())
@@ -40,7 +40,7 @@ const AlertSettingInfo = ({alertSettingInfo,setAlertSettingInfo,setScreenStatus}
             <h1>{alertSettingInfo !== null ? "Edit Alert Setting" : "Add New Alert Setting"}</h1>
           </Header>
           <div style={{width: "45%", marginLeft:"auto",marginRight:"auto",marginTop:"20px"}}>
-            <InfoForm/>
+            <InfoForm alertSettingInfo={alertSettingInfo} ChangeToTableScreen={ChangeToTableScreen}/>
           </div>
     </div>
   )

@@ -30,7 +30,7 @@ const data = [
   },
 ];
 
-const AlertSettingTable = () => {
+const AlertSettingTable = ({ChangeToInfoScreen}) => {
     const {listAlertSetting,loading} = useSelector(store => store.alertSetting)
     console.log(listAlertSetting)
     const [searchText, setSearchText] = useState('');
@@ -194,13 +194,15 @@ const AlertSettingTable = () => {
         width: '15%',
         render: (_, row) => {
           return <>
-            <Button  style={{ marginRight: "10px" }}>Edit</Button>
+            <Button onClick={() => {
+              ChangeToInfoScreen(row)
+            }} style={{ marginRight: "10px" }}>Edit</Button>
             <Button  type='primary' danger>Delete</Button>
           </>
         }
       },
     ];
-    return <Table columns={columns} dataSource={listAlertSetting} />;
+    return <Table pagination={{pageSize: 6}} columns={columns} dataSource={listAlertSetting} />;
 }
 
 export default AlertSettingTable
