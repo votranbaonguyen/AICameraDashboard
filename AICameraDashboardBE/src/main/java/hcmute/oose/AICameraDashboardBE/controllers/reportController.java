@@ -27,4 +27,12 @@ public class reportController {
         return new ResponseEntity<>
                 (new ResponseDto("Get data", "succeed", myResult), HttpStatus.OK);
     }
+
+    @GetMapping("/filter")
+    public ResponseEntity<?> getAllData2(@RequestParam int month, @RequestParam int year) {
+
+        List<Integer> myResult = reportService.getAlertCountOfMonth(month, year);
+        return new ResponseEntity<>
+                (new ResponseDto("Get data", "succeed", myResult), HttpStatus.OK);
+    }
 }
