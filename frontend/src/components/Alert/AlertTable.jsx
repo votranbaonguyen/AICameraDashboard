@@ -150,7 +150,7 @@ const AlertTable = ({changeToInfoScreen}) => {
         }
     },
   ];
-  return <Table columns={columns} dataSource={alertList} />;
+  return <Table pagination={{pageSize: 6}} columns={columns} dataSource={alertList} />;
 }
 
 export default AlertTable

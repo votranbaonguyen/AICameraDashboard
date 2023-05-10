@@ -5,6 +5,7 @@ import employeeSlice from './employee/employeeSlice'
 import areaSlice from './area/areaSlice'
 import alertSettingSlice from './alertSetting/alertSettingSlice'
 import alertSlice from './alert/alertSlice'
+import reportSlice from './report/reportSlice'
 
 
 export const store = configureStore({
@@ -14,6 +15,7 @@ export const store = configureStore({
     employeeSlice,
     area: areaSlice,
     alertSetting: alertSettingSlice,
-    alert:alertSlice
+    alert:alertSlice,
+    report: reportSlice
   },
 })
