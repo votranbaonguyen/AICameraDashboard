@@ -1,0 +1,19 @@
+version: '3'
+services:
+  backend:
+    build: ./AICameraDashboardBE        # Path to the directory containing the Spring Boot Dockerfile
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb+srv://AiCameraDashBoardAdmin:4BWa55Az6hwTiq6x@practice.jwxjj9n.mongodb.net/test?retryWrites=true&w=majority
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+  frontend:
+    build: ./frontend       # Path to the directory containing the React Dockerfile
+    ports:
+      - 5173:5173           # Port mapping for the frontend service
+    depends_on:
+      - backend             # Specify the dependency on the backend service
