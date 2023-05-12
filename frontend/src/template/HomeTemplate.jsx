@@ -50,12 +50,12 @@ const navItemList = [
     label: "Thống kê",
     path: "/static"
   },
-  {
-    key: 7,
-    icon: <PhoneOutlined />,
-    label: "Liên hệ",
-    path: "/contact"
-  },
+  // {
+  //   key: 7,
+  //   icon: <PhoneOutlined />,
+  //   label: "Liên hệ",
+  //   path: "/contact"
+  // },
 
   
 ]
@@ -139,3 +139,4 @@ export const HomeTemplate = () => {
       </Layout>
     )
 }
+a = ""
