@@ -7,8 +7,8 @@ const InfoShow = ({ alertInfo }) => {
     console.log(alertInfo)
     return (
         <div style={{ marginTop: 10 }}>
-            <Row gutter={16}>
-                <Col span={10}>
+            <Row >
+                <Col style={{marginRight:30}} span={9}>
                     <Row gutter={[16, 16]}>
                         <Col span={24}>
                             <div>

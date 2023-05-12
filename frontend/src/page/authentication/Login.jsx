@@ -3,23 +3,26 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '../../redux/authentication/authenticationSlice';
+import { useForm } from 'antd/es/form/Form';
 
 
 export const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch()
-
-    const {loading} = useSelector(store => store.authentication)
+    const [form] = useForm()
+    const {loading,loginFail} = useSelector(store => store.authentication)
 
     const onFinish = async (values) => {
         const res = await dispatch(userLogin(values))
         if(res.payload){
             navigate("/")
+        }else{
+            form.resetFields()
         }
         
     };
     const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
+        
     };
 
     return (
@@ -30,14 +33,14 @@ export const Login = () => {
                     <p>Camera Dashboard</p>
                     <h2>Login</h2>
                     <p className='sub-text'>Enter your email and password below</p>
+                    {loginFail && <p className='sub-text' style={{color:"red", marginTop:20 }}>Your email or password is wrong</p>}
+                    
                 </div>
                 <div className="login_form">
                     <Form
                         layout='vertical'
                         name="basic"
-                       
-                     
-                      
+                        form={form}
                         initialValues={{
                             remember: true,
                         }}

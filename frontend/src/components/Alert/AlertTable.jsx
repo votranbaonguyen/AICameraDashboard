@@ -5,7 +5,7 @@ import Highlighter from 'react-highlight-words';
 import { useSelector } from 'react-redux';
 
 const AlertTable = ({changeToInfoScreen}) => {
-    const {alertList} = useSelector(store => store.alert)
+    const {alertList,loading} = useSelector(store => store.alert)
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
@@ -150,7 +150,7 @@ const AlertTable = ({changeToInfoScreen}) => {
         }
     },
   ];
-  return <Table pagination={{pageSize: 6}} columns={columns} dataSource={alertList} />;
+  return <Table loading={loading} pagination={{pageSize: 6}} columns={columns} dataSource={alertList} />;
 }
 
 export default AlertTable

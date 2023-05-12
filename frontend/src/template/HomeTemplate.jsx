@@ -1,8 +1,9 @@
 import { UploadOutlined, SettingOutlined, VideoCameraOutlined, PieChartOutlined, AlertOutlined, HomeOutlined, BarChartOutlined, PhoneOutlined, UserAddOutlined } from '@ant-design/icons';
-import { Layout, Menu, theme } from 'antd';
+import { Button, Layout, Menu, theme } from 'antd';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
+import { userLogout } from '../redux/authentication/authenticationSlice';
 const { Header, Content, Footer, Sider } = Layout;
 
 const navItemList = [
@@ -61,11 +62,15 @@ const navItemList = [
 
 export const HomeTemplate = () => {
   const navigate = useNavigate()
-
+  const disptach = useDispatch()
   const [currentTab, setCurrentTab] = useState("Trang chủ")
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  const handleLogout = () => {
+    disptach(userLogout())
+  }
 
   const { isLogin } = useSelector(store => store.authentication)
 
@@ -109,7 +114,11 @@ export const HomeTemplate = () => {
               background: colorBgContainer,
             }}
           >
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingInline:20}}>
             <h1>{currentTab}</h1>
+            <Button onClick={handleLogout} danger type='primary'>Logout</Button>
+            </div>
+            
           </Header>
           <Content
             style={{

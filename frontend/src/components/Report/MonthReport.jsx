@@ -44,7 +44,7 @@ const MonthReport = () => {
       },
     },
     slider: {
-      start: 0,
+      start: 0.1,
       end: 0.3,
     },
     meta: {

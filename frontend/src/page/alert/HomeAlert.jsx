@@ -23,7 +23,7 @@ export const HomeAlert = () => {
     dispatch(getAllAlert())
   }, [])
   return (
-    <div>
+    <div style={{height:"100%"}}>
       {
         screen === "table" ?
           <AlertTable changeToInfoScreen={changeToInfoScreen}/>

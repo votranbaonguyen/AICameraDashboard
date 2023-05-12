@@ -5,7 +5,8 @@ import axios from 'axios';
 const initialState = {
   loading: false,
   userInfo: {},
-  isLogin: false
+  isLogin: false,
+  loginFail: false
 }
 
 export const userLogin = createAsyncThunk("authentication/login", async (obj) => {
@@ -27,6 +28,11 @@ export const userLogin = createAsyncThunk("authentication/login", async (obj) =>
         return res.data
   });
 
+export const userLogout = createAsyncThunk("authentication/logout", async () => {
+  sessionStorage.removeItem("access_token")
+  return false
+})
+
 export const authenticationSlice = createSlice({
   name: 'counter',
   initialState,
@@ -40,13 +46,30 @@ export const authenticationSlice = createSlice({
 
     builder.addCase(userLogin.fulfilled, (state,action) => {
         state.userInfo = action.payload
+        state.loading = false
         state.isLogin = true
-     
+        state.loginFail = false
     })
 
     builder.addCase(userLogin.rejected, (state) => {
       state.loading = false
+      state.loginFail = true
     })
+
+    builder.addCase(userLogout.pending, (state) => {
+      state.loading = true
+  })
+
+  builder.addCase(userLogout.fulfilled, (state,action) => {
+      state.userInfo = {}
+      state.isLogin = false
+      state.loading = false
+      state.loginFail = false
+  })
+
+  builder.addCase(userLogout.rejected, (state) => {
+    state.loading = false
+  })
   }
 })
 

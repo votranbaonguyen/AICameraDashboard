@@ -11,7 +11,7 @@ const AlertInfo = ({alertInfo,changeToTableScreen}) => {
     
    
     return (
-      <div>
+      <div style={{height:"100%",overflow:"auto"}}>
           <Header
               style={{
                 paddingInline: 20,
