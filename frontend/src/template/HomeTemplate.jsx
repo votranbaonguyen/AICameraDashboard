@@ -139,4 +139,3 @@ export const HomeTemplate = () => {
       </Layout>
     )
 }
-a = ""
