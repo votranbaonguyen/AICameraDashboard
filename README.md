@@ -1,4 +1,4 @@
-# Nhóm 8: Xây dựng ứng dụng trên AWS cho phép tạo database và cung cấp API để thêm,xóa sửa trên database
+# Nhóm 8: Phát triển hệ thống AI Camera Dashboard
 
 ## Công nghệ sử dụng
 * Front-End: ReactJS, Antd
