@@ -1,0 +1,914 @@
+{
+	"info": {
+		"_postman_id": "ad0ac778-d738-426b-9833-faf97540194f",
+		"name": "AICameraDashboard",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26836985",
+		"_collection_link": "https://orange-water-704927.postman.co/workspace/My-Workspace~48a328d4-74df-4f09-8ee1-181a78759c74/collection/26836985-ad0ac778-d738-426b-9833-faf97540194f?action=share&creator=26836985&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Employee",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Van Dan\",\r\n    \"phone\":\"123456\",\r\n    \"address\":\"Ca Mau\",\r\n    \"imgLink\":\"https://firebasestorage.googleapis.com/v0/b/mobileappmusicplay.appspot.com/o/HDT%2FAnh3x4.jpg?alt=media&token=89f740e7-404b-4f29-b937-d7e2dea009c2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/employee",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getByName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/employee/name?name=ao",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"employee",
+								"name"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "ao"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/employee/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"employee",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"employeeId\":\"64493ec074d69b47f22d35da\",\r\n    \"name\":\"Van Dan 2\",\r\n    \"phone\":\"123456\",\r\n    \"address\":\"Ca Mau\",\r\n    \"imgLink\":\"https://firebasestorage.googleapis.com/v0/b/mobileappmusicplay.appspot.com/o/HDT%2FAnh3x4.jpg?alt=media&token=89f740e7-404b-4f29-b937-d7e2dea009c2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/employee",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/employee?id=64493ec074d69b47f22d35da",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"employee"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "64493ec074d69b47f22d35da"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/employee/id?id=644939d3685b2503f50bb5f2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"employee",
+								"id"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "644939d3685b2503f50bb5f2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Camera",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"camName\": \"CamTest\",\r\n    \"area\":{\r\n        \"areaId\":\"645a596d5caa4f60d0d2db4d\"\r\n    },\r\n    \"resource\": \"<iframe width=\\\"560\\\" height=\\\"315\\\" src=\\\"https://www.youtube.com/embed/MVPTGNGiI-4\\\" title=\\\"YouTube video player\\\" frameborder=\\\"0\\\" allow=\\\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\\\" allowfullscreen></iframe>\",\r\n    \"connectionState\": true, //disconnected, connected\r\n    \"securityLevel\": \"medium\" //low, medium, high, emergency\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/camera",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"camera"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"camId\":\"cameraId1\",\r\n    \"camName\": \"Cam99\",\r\n    \"area\": {\r\n        \"areaId\":\"6459faa33257211651cf701f\"\r\n    },\r\n    \"resource\": \"<iframe width=\\\"560\\\" height=\\\"315\\\" src=\\\"https://www.youtube.com/embed/MVPTGNGiI-4\\\" title=\\\"YouTube video player\\\" frameborder=\\\"0\\\" allow=\\\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\\\" allowfullscreen></iframe>\",\r\n    \"connectionState\": true, //disconnected, connected\r\n    \"securityLevel\": \"low\" //low, medium, high, emergency\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/camera",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"camera"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"camName\": \"Cam99\",\r\n    \"areaId\": \"area3\",\r\n    \"resource\": \"<iframe width=\\\"560\\\" height=\\\"315\\\" src=\\\"https://www.youtube.com/embed/MVPTGNGiI-4\\\" title=\\\"YouTube video player\\\" frameborder=\\\"0\\\" allow=\\\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\\\" allowfullscreen></iframe>\",\r\n    \"connectionState\": true, //disconnected, connected\r\n    \"securityLevel\": \"high\" //low, medium, high, emergency\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/camera?id=645a598f5caa4f60d0d2db4e",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"camera"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "645a598f5caa4f60d0d2db4e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/camera/video?id=6457a3815f5f3624df6569ba",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"camera",
+								"video"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "6457a3815f5f3624df6569ba"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/camera/videos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"camera",
+								"videos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Area",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"areaName\":\"Khu Test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/area",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"area"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"camId\":\"cameraId3\",\r\n    \"areaName\":\"Khu B\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/area/id?id=6459faa33257211651cf701f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"area",
+								"id"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "6459faa33257211651cf701f"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"camId\":\"cameraId3\",\r\n    \"areaName\":\"Khu B\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/area/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"area",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"areaId\":\"645a1aa78913a919cf92854e\",\r\n    \"areaName\":\"Khu B1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/area",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"area"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"areaId\":\"64579d38dbfa3450e8141a55\",\r\n    \"camId\":\"cameraId3\",\r\n    \"areaName\":\"Khu B1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/area?id=645a596d5caa4f60d0d2db4d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"area"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "645a596d5caa4f60d0d2db4d"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Alert",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"time\":\"2020-05-11\",\r\n    \"playBack\":\"<iframe width=\\\"560\\\" height=\\\"315\\\" src=\\\"https://www.youtube.com/embed/MVPTGNGiI-4\\\" title=\\\"YouTube video player\\\" frameborder=\\\"0\\\" allow=\\\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\\\" allowfullscreen></iframe>\",\r\n    \"alertSetting\":{\r\n        \"alertSTId\":\"645a678163469b3709bee454\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/alert",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"alert"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"time\":\"2023-05-09T14:30:00\",\r\n    \"playBack\":\"<iframe width=\\\"560\\\" height=\\\"315\\\" src=\\\"https://www.youtube.com/embed/MVPTGNGiI-4\\\" title=\\\"YouTube video player\\\" frameborder=\\\"0\\\" allow=\\\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\\\" allowfullscreen></iframe>\",\r\n    \"alertSetting\":{\r\n        \"alertSTId\":\"645a3380ab217977df92d341\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/alert?id=645a3699b3d64475e49019cb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"alert"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "645a3699b3d64475e49019cb"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"time\":\"2023-05-09T14:30:00\",\r\n    \"playBack\":\"<iframe width=\\\"560\\\" height=\\\"315\\\" src=\\\"https://www.youtube.com/embed/MVPTGNGiI-4\\\" title=\\\"YouTube video player\\\" frameborder=\\\"0\\\" allow=\\\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\\\" allowfullscreen></iframe>\",\r\n    \"alertSetting\":{\r\n        \"alertSTId\":\"645a3380ab217977df92d341\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/alert/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"alert",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"time\":\"2023-05-09T14:30:00\",\r\n    \"playBack\":\"<iframe width=\\\"560\\\" height=\\\"315\\\" src=\\\"https://www.youtube.com/embed/MVPTGNGiI-4\\\" title=\\\"YouTube video player\\\" frameborder=\\\"0\\\" allow=\\\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\\\" allowfullscreen></iframe>\",\r\n    \"alertSetting\":{\r\n        \"alertSTId\":\"645a3380ab217977df92d341\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/alert/id?id=645a367fb3d64475e49019c8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"alert",
+								"id"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "645a367fb3d64475e49019c8"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "alertSetting",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"alertName\":\"Canh bao nguoi hoi la 1\",\r\n    \"startTime\":\"07:00:00\",\r\n    \"endTime\":\"17:00:00\",\r\n    \"secLevel\":\"Low\",//low, medium, high, emergency\r\n    \"employee\":{\r\n        \"employeeId\":\"645a676b63469b3709bee450\"\r\n    },\r\n    \"imgLink\":\"https://firebasestorage.googleapis.com/v0/b/mobileappmusicplay.appspot.com/o/HDT%2FAnh3x4.jpg?alt=media&token=89f740e7-404b-4f29-b937-d7e2dea009c2\",\r\n    \"area\":{\r\n        \"areaId\":\"645a1aa78913a919cf92854e\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/alertsetting",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"alertsetting"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"alertName\":\"Canh bao nguoi la 1\",\r\n    \"startTime\":\"00:00:00\",\r\n    \"endTime\":\"23:59:59\",\r\n    \"secLevel\":\"Low\", //low, medium, high, emergency\r\n    \"imgLink\":\"https://firebasestorage.googleapis.com/v0/b/mobileappmusicplay.appspot.com/o/HDT%2FAnh3x4.jpg?alt=media&token=89f740e7-404b-4f29-b937-d7e2dea009c2\",\r\n    \"area\":{\r\n        \"areaId\":\"645a1aa78913a919cf92854e\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/alertsetting/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"alertsetting",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"alertName\":\"Canh bao nguoi la 1\",\r\n    \"startTime\":\"00:00:00\",\r\n    \"endTime\":\"23:59:59\",\r\n    \"secLevel\":\"Low\", //low, medium, high, emergency\r\n    \"imgLink\":\"https://firebasestorage.googleapis.com/v0/b/mobileappmusicplay.appspot.com/o/HDT%2FAnh3x4.jpg?alt=media&token=89f740e7-404b-4f29-b937-d7e2dea009c2\",\r\n    \"area\":{\r\n        \"areaId\":\"645a1aa78913a919cf92854e\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/alertsetting/id?id=645a3380ab217977df92d341",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"alertsetting",
+								"id"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "645a3380ab217977df92d341"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"alertSTId\":\"645a3a6fd2e2e36ef5357b11\",\r\n    \"alertName\":\"Canh bao nguoi hoi la 1\",\r\n    \"startTime\":\"07:00:00\",\r\n    \"endTime\":\"17:00:00\",\r\n    \"secLevel\":\"Low\",//low, medium, high, emergency\r\n    \"employee\":{\r\n        \"employeeId\":\"644939d3685b2503f50bb5f2\"\r\n    },\r\n    \"imgLink\":\"https://firebasestorage.googleapis.com/v0/b/mobileappmusicplay.appspot.com/o/HDT%2FAnh3x4.jpg?alt=media&token=89f740e7-404b-4f29-b937-d7e2dea009c2\",\r\n    \"area\":{\r\n        \"areaId\":\"645a1aa78913a919cf92854e\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/alertsetting",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"alertsetting"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"alertName\":\"Canh bao nguoi la 1\",\r\n    \"startTime\":\"00:00:00\",\r\n    \"endTime\":\"23:59:59\",\r\n    \"secLevel\":\"Low\", //low, medium, high, emergency\r\n    \"imgLink\":\"https://firebasestorage.googleapis.com/v0/b/mobileappmusicplay.appspot.com/o/HDT%2FAnh3x4.jpg?alt=media&token=89f740e7-404b-4f29-b937-d7e2dea009c2\",\r\n    \"area\":{\r\n        \"areaId\":\"645a1aa78913a919cf92854e\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/alertsetting/id?id=645a3380ab217977df92d341",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"alertsetting",
+								"id"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "645a3380ab217977df92d341"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Report",
+			"item": [
+				{
+					"name": "Total-Alert-Of-Month-In-Year",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/report?year=2020",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"report"
+							],
+							"query": [
+								{
+									"key": "year",
+									"value": "2020"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Total-Alert-Of-Day-In-Month",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/report/filter?month=4&year=2020",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"report",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "month",
+									"value": "4"
+								},
+								{
+									"key": "year",
+									"value": "2020"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "testApp",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"tvd@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
