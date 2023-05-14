@@ -21,8 +21,8 @@ Lệnh: cd AICameraDashboard/
 - **Bước 5:** Chạy docker container:
 Lệnh: docker-compose up hoặc docker-compose up -d
 - **Bước 6:** Mở ứng dụng trên trình duyệt tại port 5173 để kiểm tra.
-Mở trình duyệt tại với url: http:<ip>:5173
-<ip> là ip của máy đang chạy docker, nếu đang chạy trên local thì thay thế bằng localhost
+Mở trình duyệt tại với url: http:ip:5173
+ip là ip của máy đang chạy docker, nếu đang chạy trên local thì thay thế bằng localhost
 
 
 
